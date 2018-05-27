@@ -10,14 +10,10 @@ import java.io.*;
 import java.util.*;
 
 
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.PosixParser;
-import org.apache.log4j.Logger;
-import org.apache.lucene.queryParser.ParseException;
-import org.ektorp.http.StdHttpClient;
+import org.apache.commons.cli.*;
+import org.apache.log4j.*;
+import org.apache.lucene.queryParser.*;
+import org.ektorp.http.*;
 // Richiede commento
 
 /**
