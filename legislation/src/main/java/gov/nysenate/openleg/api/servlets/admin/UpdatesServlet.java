@@ -45,15 +45,17 @@ public class UpdatesServlet extends HttpServlet
 		public ArrayList<Change> handle(ResultSet results) throws SQLException {
 			synchronized (mysqlDateFormat) {
 			ArrayList<Change> changes = new ArrayList<Change>();
-			while (results.next()) {
-				try {
+			try {
+                        while (results.next()) {
+				
 					changes.add(new Change(results.getString("oid"), results.getString("otype"),
 							Storage.Status.valueOf(results.getString("status")),
 							mysqlDateFormat.parse(results.getString("time"))));
-				} catch (ParseException e) {
+				 
+			}
+                        }catch (ParseException e) {
 					logger.error("Invalid change.time format", e);
 				}
-			}
 			return changes;
 			}
 		}

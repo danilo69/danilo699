@@ -322,15 +322,18 @@ public class Environment
         // Process each file individually, flushing changes to storage as necessary
         // Each file processor should produce a change log indicating what happened
         timer.start();
+        try {
         for(File file : files) {
-            try {
+            
                 logger.debug("Ingesting: "+file);
                 String type = file.getParentFile().getName();
                 
                 findType(type, file);
 
-            }
-            catch (IOException e) {
+            
+            
+        }
+    } catch (IOException e) {
                 logger.error("Issue with "+file.getName(), e);
             }
             catch (UnmarshalException e) {
@@ -339,7 +342,7 @@ public class Environment
             catch (JAXBException e) {
                 logger.error("Unable to parse xml "+file.getName(), e);
             }
-        }
+        
         storage.flush();
         logger.info(timer.stop()+" seconds to injest "+files.size()+" files.");
         return ChangeLogger.getChangeLog();

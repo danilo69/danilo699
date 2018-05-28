@@ -61,9 +61,9 @@ LocalDate date1 = LocalDate.now();
         return stream.toString(this.encoding);
     }
 /** Comments about this class */
-    public void write(BaseObject object, OutputStream out) throws IOException
+    public void write(BaseObject object, OutputStream out) throws IOException,InvalidBaseObjException 
     {
-    try{
+    
         if (object.getOtype().equals("bill")) {
             write((Bill)object, out);
         }
@@ -79,10 +79,7 @@ LocalDate date1 = LocalDate.now();
         else {
             throw new InvalidBaseObjException("Invalid base object otype: "+object.getOtype());
         }
-    }
-    catch (InvalidBaseObjException e){
-        e.printStackTrace();
-    }
+    
     }
 /** Comments about this class */
     public void write(SenateResponse response, OutputStream out) throws IOException
@@ -414,9 +411,9 @@ LocalDate date1 = LocalDate.now();
         return element;
     }
     /** Comments about this class */
-    private Element editElement(Element element, Object item, String itemTag){
+    private Element editElement(Element element, Object item, String itemTag)throws InvalidArrayNodeException{
         
-    try{  
+     
         if(Sequence.class.isInstance(item)) {
             element.addContent(makeElement(itemTag, (Sequence)item));
         }
@@ -429,10 +426,7 @@ LocalDate date1 = LocalDate.now();
         else {
             throw new InvalidArrayNodeException ("Invalid array node type: "+item.getClass());
         }
-    }
-    catch (InvalidArrayNodeException e){
-        e.printStackTrace();
-    }
+    
         
         return element;
     }

@@ -2,6 +2,7 @@
 
 
 import gov.nysenate.openleg.model.*;
+ import gov.nysenate.openleg.api.servlets.converter.NotConvertException;
 
 
 import java.lang.reflect.Field;
@@ -37,7 +38,7 @@ public class LuceneJsonConverter
     protected static HashMap<String,JsonObject> cachedSimpleBills = new HashMap<String,JsonObject>();
     LocalDateTime date2= LocalDateTime.now();
 /** Comments about this class */
-    private JsonObject editNode(JsonObject node, BaseObject o){
+    private JsonObject editNode(JsonObject node, BaseObject o)throws NotConvertException{
         
         if(o instanceof Bill) {
             cachedSimpleBills.remove(((Bill)o).getBillId());

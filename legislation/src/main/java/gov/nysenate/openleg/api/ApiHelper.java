@@ -141,9 +141,9 @@ public class ApiHelper implements OpenLegConstants {
         if (controlSr(sr)){
             return resultList;
         }
-        
+        try {    
         for (Result result : sr.getResults()) {
-            try {
+            
                 String type = result.getOtype();
                 String jsonData = result.getData();
 
@@ -156,12 +156,10 @@ public class ApiHelper implements OpenLegConstants {
                 Class<? extends BaseObject> clazz = apiType.clazz();
 
                 BaseObject resultObj = null;
-                try {
+                
                     resultObj = mapper.readValue(jsonData, clazz);
                     result.setObject(resultObj);
-                } catch (Exception e) {
-                    logger.error("error binding:" + clazz.getName(), e);
-                }
+                 throw new LoggeException();
 
                 if (resultObj == null)
                     continue;
@@ -171,12 +169,21 @@ public class ApiHelper implements OpenLegConstants {
 
                 result = editResult(resultObj, type, result);
                 
-            } catch (Exception e) {
+             
+            
+            }
+        }
+        catch ( LoggeException e) {
+                    logger.error("error binding:" + clazz.getName(), e);
+                }
+        
+             catch (Exception e) {
                 logger.error(TextFormatter.append(
                         "problem parsing result: ", result.getOtype(), "-", result.getOid()),
                         e);
             }
-        }
+       
+        
 
         return sr.getResults();
     }
@@ -284,20 +291,23 @@ public class ApiHelper implements OpenLegConstants {
 
         LocalDate sdf= LocalDate.now();
         boolean t= m.find();
+        try {
         while(t) {
             String d = term.substring(m.start(),m.end());
 
             Date date = null; 
-            try {
+            
                 date = sdf.parse(d);
                 term = term.substring(0, m.start()) + date.getTime() + term.substring(m.end());
-            } catch (java.text.ParseException e) {
-                logger.warn(e);
-            }
+            
 
             m.reset(term);
 
         }
+        }
+        catch (java.text.ParseException e) {
+                logger.warn(e);
+            }
 
         return term;
     }

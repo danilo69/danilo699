@@ -165,12 +165,17 @@ public class Addendum extends BaseObject
         this.meetings.remove(meeting);
     }
 
-    @Override
+   
     
         /**
-       * Comments about this field
-       */
+         * valore intero
+         */
         public int value;
+    /**
+     * 
+     * @param o
+     * @return 
+     */
         public boolean equals (Object o) {
           if (o instanceof Addendum){  
              return true; }

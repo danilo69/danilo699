@@ -194,17 +194,21 @@ public class LbdcFileHtml extends LbdcFile {
             ArrayList<Action> billEvents = new ArrayList<Action>();
             
             boolean f= m.find();
-            while(f) {
+           
+            try {
+                while(f) {
                 if(m.group(1) != null) {
                     continue;
                 }
 
-                try {
+                
                     billEvents.add(new Action(bill.getSenateBillNo(), sdf.parse(m.group(2)), m.group(3)));
-                } catch (ParseException e) {
+                
+            }
+        }catch (ParseException e) {
                    System.out.println("Something was wrong");
                 }
-            }
+            
 
             bill.setActions(billEvents);
         }

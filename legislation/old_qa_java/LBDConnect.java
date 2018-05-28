@@ -288,35 +288,31 @@ public class LBDConnect {
 
         LocalDate date1 = LocalDate.now();
         Action be = new Action();
-        for(int i = 7; i < strings.length;) {
+        
+        try{
+        for(int i = 7; i < strings.length;i++) {
             if(strings[i].matches("\\d{2}/\\d{2}/\\d{2}")) {
-                
-                try {
 
                     be.setDate(sdf.parse(strings[i]));
-                    i++;
                     be.setText(strings[i]);
 
                     bill.addAction(be);
-                } catch (ParseException e) {
-                    logger.error(e);
                 }
-                i++;
             }
             else {
                 if(strings[i].charAt(0) == sameAsBillNo.charAt(0)) {
-                    i += 2;
                     boolean d= strings[i].matches("\\d{2}/\\d{2}/\\d{2}");
                     while(d) {
-                        i += 2;
                     }
-                    i += 2;
                 }
                 else {
                     break;
                 }
             }
-        }
+        
+    }catch (ParseException e) {
+                    logger.error(e);
+                }
         return true;
     }
 /** Comments about this class */

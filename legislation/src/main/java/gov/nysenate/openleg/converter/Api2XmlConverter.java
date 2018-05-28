@@ -93,8 +93,8 @@ public class Api2XmlConverter
         xmlOutputter.output(doc, out);
     }
     /** Comments about this class */
-    private Element editElementList(Element element, Object item, String itemTag){
-    try{
+    private Element editElementList(Element element, Object item, String itemTag)throws InvalidArrayNodeException{
+    
          
         if(Section.class.isInstance(item)) {
             element.addContent(makeElement(itemTag, (Section)item));
@@ -114,11 +114,7 @@ public class Api2XmlConverter
         else {
             throw new InvalidArrayNodeException("Invalid array node type: "+item.getClass());
         }
-        
-    }
-    catch (InvalidArrayNodeException e){
-        e.printStackTrace();
-    }
+    
         return element;
     }
 /** Comments about this class */
@@ -147,9 +143,9 @@ public class Api2XmlConverter
         return element;
     }
 /** Comments about this class */
-    protected Element makeElement(IBaseObject object) throws IOException
+    protected Element makeElement(IBaseObject object) throws IOException, InvalidBaseObjException
     {
-        try{
+        
         if (object.getOtype().equals("bill")) {
             return makeElement("bill", (Bill)object);
         }
@@ -171,12 +167,7 @@ public class Api2XmlConverter
         else {
             throw new InvalidBaseObjException("Invalid base object otype: "+object.getOtype());
         }
-        }
-        catch (InvalidBaseObjException e){
-            e.printStackTrace();
-        }
-        //this statement is never reached
-        return (Element)object;
+        
     }
 /** Comments about this class */
     protected Element makeElement(String tag, Transcript value)
